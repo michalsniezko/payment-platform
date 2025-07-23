@@ -13,12 +13,6 @@ class RouterTest extends TestCase
 {
     private Router $router;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->router = new Router();
-    }
-
     public function testItRegistersARoute(): void
     {
         $this->router->register('get', '/users', ['Users', 'index']);
@@ -53,8 +47,7 @@ class RouterTest extends TestCase
     #[DataProviderExternal(RouterDataProvider::class, 'routeNotFoundCases')]
     public function testItThrowsRouteNotFoundException(string $requestUri, string $requestMethod): void
     {
-        $users = new class ()
-        {
+        $users = new class () {
             public function delete(): bool
             {
                 return true;
@@ -82,8 +75,7 @@ class RouterTest extends TestCase
      */
     public function testItResolvesRouteFromClass(): void
     {
-        $users = new class ()
-        {
+        $users = new class () {
             public function index(): array
             {
                 return [1, 2, 3];
@@ -92,5 +84,11 @@ class RouterTest extends TestCase
 
         $this->router->get('/users', [$users, 'index']);
         $this->assertSame([1, 2, 3], $this->router->resolve('/users', 'get'));
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->router = new Router();
     }
 }

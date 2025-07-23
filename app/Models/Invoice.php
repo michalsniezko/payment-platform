@@ -13,7 +13,7 @@ class Invoice extends Model
 
         $stmt->execute([$amount, $userId]);
 
-        return (int) $this->db->lastInsertId();
+        return (int)$this->db->lastInsertId();
     }
 
     public function find(int $invoiceId): array

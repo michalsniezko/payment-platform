@@ -14,7 +14,8 @@ class App
         protected Router $router,
         protected array $request,
         protected Config $config
-    ) {
+    )
+    {
         static::$db = new DB($config->db ?? []);
     }
 

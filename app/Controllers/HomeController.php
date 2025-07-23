@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\App;
 use App\Models\Invoice;
 use App\Models\SignUp;
 use App\Models\User;
+use Throwable;
 
 class HomeController
 {
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function index(): View
     {

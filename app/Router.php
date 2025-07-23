@@ -9,16 +9,16 @@ class Router
 {
     private array $routes = [];
 
+    public function get(string $route, callable|array $action): self
+    {
+        return $this->register('get', $route, $action);
+    }
+
     public function register(string $requestMethod, string $route, callable|array $action): self
     {
         $this->routes[$requestMethod][$route] = $action;
 
         return $this;
-    }
-
-    public function get(string $route, callable|array $action): self
-    {
-        return $this->register('get', $route, $action);
     }
 
     public function post(string $route, callable|array $action): self

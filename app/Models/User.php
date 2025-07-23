@@ -15,6 +15,6 @@ class User extends Model
 
         $stmt->execute([$email, $name, $isActive]);
 
-        return (int) $this->db->lastInsertId();
+        return (int)$this->db->lastInsertId();
     }
 }

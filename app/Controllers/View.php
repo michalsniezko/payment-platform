@@ -10,12 +10,18 @@ class View
     public function __construct(
         protected string $view,
         protected array $params = []
-    ) {
+    )
+    {
     }
 
     public static function make(string $view, array $params = []): self
     {
         return new static($view, $params);
+    }
+
+    public function __toString(): string
+    {
+        return $this->render();
     }
 
     /**
@@ -24,7 +30,7 @@ class View
     public function render(): string
     {
         $viewPath = VIEW_PATH . '/' . $this->view . '.php';
-        if (! file_exists($viewPath)) {
+        if (!file_exists($viewPath)) {
             throw new ViewNotFoundException();
         }
 
@@ -32,12 +38,7 @@ class View
 
         ob_start();
         include $viewPath;
-        return (string) ob_get_clean();
-    }
-
-    public function __toString(): string
-    {
-        return $this->render();
+        return (string)ob_get_clean();
     }
 
     public function __get(string $name)

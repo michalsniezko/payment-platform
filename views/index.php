@@ -12,9 +12,9 @@ Home Page
 <hr/>
 <div>
     <?php if (!empty($invoice)): ?>
-        Invoice ID: <?= htmlspecialchars($invoice['id'] , ENT_NOQUOTES) ?> <br />
-        Invoice Amount: <?= htmlspecialchars($invoice['amount'] , ENT_NOQUOTES) ?> <br />
-        User: <?= htmlspecialchars($invoice['full_name'] , ENT_NOQUOTES) ?> <br />
+        Invoice ID: <?= htmlspecialchars($invoice['id'], ENT_NOQUOTES) ?> <br/>
+        Invoice Amount: <?= htmlspecialchars($invoice['amount'], ENT_NOQUOTES) ?> <br/>
+        User: <?= htmlspecialchars($invoice['full_name'], ENT_NOQUOTES) ?> <br/>
     <?php endif ?>
 </div>
 </body>
