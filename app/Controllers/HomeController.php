@@ -3,36 +3,16 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Models\Invoice;
-use App\Models\SignUp;
-use App\Models\User;
-use Throwable;
+use App\Container;
+use App\Services\InvoiceService;
 
 class HomeController
 {
-    /**
-     * @throws Throwable
-     */
     public function index(): View
     {
-        $email = 'hrthtr@doe.com';
-        $name = 'John Doe';
-        $amount = 25;
+        new Container()->get(InvoiceService::class)->process([], 43.4);
 
-        $userModel = new User();
-        $invoiceModel = new Invoice();
-
-        $invoiceId = new SignUp($userModel, $invoiceModel)->register(
-            [
-                'email' => $email,
-                'name' => $name,
-            ],
-            [
-                'amount' => $amount,
-            ]
-        );
-
-        return View::make('index', ['invoice' => $invoiceModel->find($invoiceId)]);
+        return View::make('index');
     }
 
     public function upload(): never

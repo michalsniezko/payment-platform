@@ -16,7 +16,7 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ../../src:/var/www
+      - ../:/var/www
       - ./nginx:/etc/nginx/conf.d
   db:
     container_name: payment-platform-db
