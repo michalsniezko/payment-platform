@@ -3,14 +3,18 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Container;
 use App\Services\InvoiceService;
 
 class HomeController
 {
+    public function __construct(private InvoiceService $invoiceService)
+    {
+
+    }
+
     public function index(): View
     {
-        new Container()->get(InvoiceService::class)->process([], 43.4);
+        $this->invoiceService->process([], 43.4);
 
         return View::make('index');
     }
