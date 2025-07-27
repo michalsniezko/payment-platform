@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Exceptions\ContainerException;
 use App\Exceptions\RouteNotFoundException;
+use ReflectionException;
 
 class Router
 {
@@ -37,6 +39,8 @@ class Router
 
     /**
      * @throws RouteNotFoundException
+     * @throws ReflectionException
+     * @throws ContainerException
      */
     public function resolve(string $requestUri, string $requestMethod): mixed
     {

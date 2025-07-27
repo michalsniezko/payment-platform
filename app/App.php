@@ -5,6 +5,7 @@ namespace App;
 
 use App\Controllers\View;
 use App\Exceptions\RouteNotFoundException;
+use ReflectionException;
 
 class App
 {
@@ -32,6 +33,9 @@ class App
             http_response_code(404);
 
             echo View::make('error/404');
+        } catch (Exceptions\ContainerException|ReflectionException $e) {
+            http_response_code(500);
+            echo $e->getMessage();
         }
     }
 
