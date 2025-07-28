@@ -9,7 +9,7 @@ use ReflectionException;
 
 class Router
 {
-    public function __construct(private Container $container)
+    public function __construct(private readonly Container $container)
     {
     }
 

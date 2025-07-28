@@ -15,7 +15,8 @@ $dotenv->load();
 const STORAGE_PATH = __DIR__ . '/../storage/';
 const VIEW_PATH = __DIR__ . '/../views/';
 
-$router = new Router(new Container());
+$container = new Container();
+$router = new Router($container);
 
 $router
     ->get('/', [HomeController::class, 'index'])
@@ -26,6 +27,7 @@ $router
     ->post('/invoices/create', [InvoiceController::class, 'store']);
 
 new App(
+    $container,
     $router,
     [
         'uri' => $_SERVER['REQUEST_URI'],

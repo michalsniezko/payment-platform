@@ -5,6 +5,8 @@ namespace App;
 
 use App\Controllers\View;
 use App\Exceptions\RouteNotFoundException;
+use App\Services\PaddlePayment;
+use App\Services\PaymentGatewayInterface;
 use ReflectionException;
 
 class App
@@ -12,12 +14,18 @@ class App
     private static DB $db;
 
     public function __construct(
+        protected Container $container,
         protected Router $router,
         protected array $request,
-        protected Config $config
+        protected Config    $config,
     )
     {
         static::$db = new DB($config->db ?? []);
+
+        $this->container->set(
+            PaymentGatewayInterface::class,
+            fn(Container $container) => $container->get(PaddlePayment::class)
+        );
     }
 
     public static function db(): DB
