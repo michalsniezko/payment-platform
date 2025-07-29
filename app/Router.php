@@ -9,15 +9,15 @@ use ReflectionException;
 
 class Router
 {
+    private array $routes = [];
+
     public function __construct(private readonly Container $container)
     {
     }
 
-    private array $routes = [];
-
-    public function get(string $route, callable|array $action): self
+    public function post(string $route, callable|array $action): self
     {
-        return $this->register('get', $route, $action);
+        return $this->register('post', $route, $action);
     }
 
     public function register(string $requestMethod, string $route, callable|array $action): self
@@ -25,11 +25,6 @@ class Router
         $this->routes[$requestMethod][$route] = $action;
 
         return $this;
-    }
-
-    public function post(string $route, callable|array $action): self
-    {
-        return $this->register('post', $route, $action);
     }
 
     public function routes(): array
@@ -67,5 +62,10 @@ class Router
 
 
         throw new RouteNotFoundException();
+    }
+
+    public function get(string $route, callable|array $action): self
+    {
+        return $this->register('get', $route, $action);
     }
 }

@@ -5,7 +5,7 @@ namespace App\Controllers;
 
 use App\Services\InvoiceService;
 
-class HomeController
+readonly class HomeController
 {
     public function __construct(private InvoiceService $invoiceService)
     {

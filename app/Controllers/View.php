@@ -19,6 +19,9 @@ class View
         return new static($view, $params);
     }
 
+    /**
+     * @throws ViewNotFoundException
+     */
     public function __toString(): string
     {
         return $this->render();

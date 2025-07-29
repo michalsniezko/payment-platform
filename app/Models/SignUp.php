@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Model;
+use Throwable;
 
 class SignUp extends Model
 {
@@ -12,6 +13,9 @@ class SignUp extends Model
         parent::__construct();
     }
 
+    /**
+     * @throws Throwable
+     */
     public function register(array $userInfo, array $invoiceInfo): int
     {
         try {
@@ -21,7 +25,7 @@ class SignUp extends Model
             $invoiceId = $this->invoiceModel->create($invoiceInfo['amount'], $userId);
 
             $this->db->commit();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             if ($this->db->inTransaction()) {
                 $this->db->rollBack();
             }

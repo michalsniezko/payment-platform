@@ -16,12 +16,13 @@ class App
     public function __construct(
         protected Container $container,
         protected Router $router,
-        protected array $request,
+        protected array  $request,
         protected Config    $config,
     )
     {
         static::$db = new DB($config->db ?? []);
 
+        // implicitly bind interface to implementing class:
         $this->container->set(
             PaymentGatewayInterface::class,
             fn(Container $container) => $container->get(PaddlePayment::class)
