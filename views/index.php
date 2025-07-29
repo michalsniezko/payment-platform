@@ -12,10 +12,14 @@ Home Page
 <hr/>
 <div>
     <?php if (!empty($invoice)): ?>
+        <h1>Uploaded invoice:</h1>
         Invoice ID: <?= htmlspecialchars($invoice['id'], ENT_NOQUOTES) ?> <br/>
         Invoice Amount: <?= htmlspecialchars($invoice['amount'], ENT_NOQUOTES) ?> <br/>
         User: <?= htmlspecialchars($invoice['full_name'], ENT_NOQUOTES) ?> <br/>
     <?php endif ?>
+</div>
+<div>
+    <a href="/invoices">Invoices</a>
 </div>
 </body>
 

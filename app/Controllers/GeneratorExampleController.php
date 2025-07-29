@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Attributes\Get;
 use App\Models\Ticket;
 
 readonly class GeneratorExampleController
@@ -11,12 +12,11 @@ readonly class GeneratorExampleController
     {
     }
 
+    #[Get('/examples/generator')]
     public function index(): void
     {
         foreach ($this->ticket->all() as $ticket) {
             echo $ticket['id'] . ': ' . substr($ticket['description'], 0, 15) . '<br / >';
         }
-
-
     }
 }

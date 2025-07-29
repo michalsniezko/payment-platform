@@ -19,14 +19,13 @@ const VIEW_PATH = __DIR__ . '/../views/';
 $container = new Container();
 $router = new Router($container);
 
-$router
-    ->get('/', [HomeController::class, 'index'])
-    ->get('/examples/generator', [GeneratorExampleController::class, 'index'])
-    ->post('/upload', [HomeController::class, 'upload'])
-    ->get('/download', [HomeController::class, 'download'])
-    ->get('/invoices', [InvoiceController::class, 'index'])
-    ->get('/invoices/create', [InvoiceController::class, 'create'])
-    ->post('/invoices/create', [InvoiceController::class, 'store']);
+$router->registerRoutesFromControllerAttributes(
+    [
+        HomeController::class,
+        GeneratorExampleController::class,
+        InvoiceController::class,
+    ]
+);
 
 new App(
     $container,

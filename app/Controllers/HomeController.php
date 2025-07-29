@@ -3,22 +3,20 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Services\InvoiceService;
+use App\Attributes\Get;
+use App\Attributes\Post;
+use App\Attributes\Route;
 
 readonly class HomeController
 {
-    public function __construct(private InvoiceService $invoiceService)
-    {
-
-    }
-
+    #[Get(path: '/')]
+    #[Get(path: '/home')]
     public function index(): View
     {
-        $this->invoiceService->process([], 43.4);
-
         return View::make('index');
     }
 
+    #[Post(path: '/')]
     public function upload(): never
     {
         $filePath = STORAGE_PATH . '/' . $_FILES['receipt']['name'];
@@ -29,6 +27,7 @@ readonly class HomeController
         exit;
     }
 
+    #[Route(path: '/download', requestMethod: 'get')]
     public function download(): void
     {
         header('Content-Type: application/pdf');

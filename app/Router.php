@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Attributes\Route;
 use App\Exceptions\ContainerException;
 use App\Exceptions\RouteNotFoundException;
+use ReflectionAttribute;
+use ReflectionClass;
 use ReflectionException;
 
 class Router
@@ -15,9 +18,25 @@ class Router
     {
     }
 
-    public function post(string $route, callable|array $action): self
+    /**
+     * @throws ReflectionException
+     */
+    public function registerRoutesFromControllerAttributes(array $controllers): void
     {
-        return $this->register('post', $route, $action);
+        foreach ($controllers as $controller) {
+            $reflectionController = new ReflectionClass($controller);
+
+            foreach ($reflectionController->getMethods() as $reflectionMethod) {
+                $attributes = $reflectionMethod->getAttributes(Route::class, ReflectionAttribute::IS_INSTANCEOF);
+
+                foreach ($attributes as $attribute) {
+                    /** @var Route $route */
+                    $route = $attribute->newInstance();
+                    $this->register($route->requestMethod, $route->path, [$controller, $reflectionMethod->getName()]);
+                }
+            }
+
+        }
     }
 
     public function register(string $requestMethod, string $route, callable|array $action): self
@@ -25,6 +44,11 @@ class Router
         $this->routes[$requestMethod][$route] = $action;
 
         return $this;
+    }
+
+    public function post(string $route, callable|array $action): self
+    {
+        return $this->register('post', $route, $action);
     }
 
     public function routes(): array
