@@ -3,10 +3,22 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enum\InvoiceStatus;
 use App\Model;
 
 class Invoice extends Model
 {
+    public function all(InvoiceStatus $status): array
+    {
+        $stmt = $this->db->prepare(
+            'SELECT id, amount, status FROM invoices where status = ?'
+        );
+
+        $stmt->execute([$status->value]);
+
+        return $stmt->fetchAll();
+    }
+
     public function create(float $amount, int $userId): int
     {
         $stmt = $this->db->prepare('insert into invoices (amount, user_id) values (?, ?)');

@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Contracts\PaymentGatewayInterface;
 use App\Controllers\View;
 use App\Exceptions\RouteNotFoundException;
 use App\Services\PaddlePayment;
-use App\Services\PaymentGatewayInterface;
 use ReflectionException;
 
 class App

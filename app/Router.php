@@ -32,7 +32,7 @@ class Router
                 foreach ($attributes as $attribute) {
                     /** @var Route $route */
                     $route = $attribute->newInstance();
-                    $this->register($route->requestMethod, $route->path, [$controller, $reflectionMethod->getName()]);
+                    $this->register($route->requestMethod->value, $route->path, [$controller, $reflectionMethod->getName()]);
                 }
             }
 

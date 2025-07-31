@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Contracts\PaymentGatewayInterface;
+
 class InvoiceService
 {
     public function __construct(

@@ -5,6 +5,8 @@ namespace App\Controllers;
 
 use App\Attributes\Get;
 use App\Attributes\Post;
+use App\Enum\InvoiceStatus;
+use App\Models\Invoice;
 use App\Services\InvoiceService;
 
 readonly class InvoiceController
@@ -18,7 +20,9 @@ readonly class InvoiceController
     #[Get('/invoices')]
     public function index(): View
     {
-        return View::make('invoices/index');
+        $invoices = new Invoice()->all(InvoiceStatus::PAID);
+
+        return View::make('invoices/index', ['invoices' => $invoices]);
     }
 
     #[Get('/invoices/create')]

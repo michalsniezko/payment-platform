@@ -6,6 +6,7 @@ namespace App\Controllers;
 use App\Attributes\Get;
 use App\Attributes\Post;
 use App\Attributes\Route;
+use App\Enum\HttpMethod;
 
 readonly class HomeController
 {
@@ -27,7 +28,7 @@ readonly class HomeController
         exit;
     }
 
-    #[Route(path: '/download', requestMethod: 'get')]
+    #[Route(path: '/download', requestMethod: HttpMethod::GET)]
     public function download(): void
     {
         header('Content-Type: application/pdf');
