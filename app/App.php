@@ -8,6 +8,7 @@ use App\Controllers\View;
 use App\Exceptions\RouteNotFoundException;
 use App\Services\PaddlePayment;
 use ReflectionException;
+use Symfony\Component\Mailer\MailerInterface;
 
 class App
 {
@@ -27,6 +28,7 @@ class App
             PaymentGatewayInterface::class,
             fn(Container $container) => $container->get(PaddlePayment::class)
         );
+        $this->container->set(MailerInterface::class, fn() => new CustomMailer($config->mailer['dsn']));
     }
 
     public static function db(): DB

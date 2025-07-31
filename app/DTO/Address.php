@@ -10,6 +10,7 @@ readonly class Address
         public string $state,
         public string $city,
         public string $street,
+
         public string $houseNumber,
         public string $zip,
     )
