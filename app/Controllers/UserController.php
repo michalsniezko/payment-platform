@@ -5,6 +5,7 @@ namespace App\Controllers;
 
 use App\Attributes\Get;
 use App\Attributes\Post;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -22,6 +23,9 @@ class UserController
         return View::make('users/register');
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     #[Post('/users')]
     public function register(): void
     {

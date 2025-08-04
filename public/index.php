@@ -20,14 +20,18 @@ const VIEW_PATH = __DIR__ . '/../views/';
 $container = new Container();
 $router = new Router($container);
 
-$router->registerRoutesFromControllerAttributes(
-    [
-        HomeController::class,
-        GeneratorExampleController::class,
-        InvoiceController::class,
-        UserController::class,
-    ]
-);
+try {
+    $router->registerRoutesFromControllerAttributes(
+        [
+            HomeController::class,
+            GeneratorExampleController::class,
+            InvoiceController::class,
+            UserController::class,
+        ]
+    );
+} catch (ReflectionException $e) {
+    header('HTTP/1.0 500 Internal Server Error');
+}
 
 new App(
     $container,

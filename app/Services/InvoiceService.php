@@ -29,8 +29,6 @@ class InvoiceService
         // 3. send receipt
         $this->emailService->send($customer, 'receipt');
 
-        $customerName = $customer['name'] ?? 'unknown customer';
-        echo "Invoice for $customerName for amount $amount has been processed </br>";
         return true;
     }
 }
