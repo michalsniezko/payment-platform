@@ -42,4 +42,4 @@ services:
     build: ./cron
     volumes:
       - ../:/var/www
-      - ./log.cron:/var/log/cron
+      - ./log/cron:/var/log/cron
