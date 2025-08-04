@@ -4,11 +4,34 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Enum\EmailStatus;
+use App\Models\Email;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email as SymfonyEmail;
+
 class EmailService
 {
-    public function send(array $to, string $template): void
+    public function __construct(protected Email $emailModel, protected MailerInterface $mailer)
     {
-//        sleep(1);
+    }
 
+    public function sendQueuedEmails(): void
+    {
+        $emails = $this->emailModel->getEmailsByStatus(EmailStatus::QUEUE);
+
+        foreach ($emails as $email) {
+            $meta = json_decode($email->meta, true);
+
+            $emailMessage = new SymfonyEmail()
+                ->from($meta['from'])
+                ->to($meta['to'])
+                ->subject($email->subject)
+                ->text($email->text_body)
+                ->html($email->html_body);
+
+            $this->mailer->send($emailMessage);
+
+            $this->emailModel->markEmailSent($email->id);
+        }
     }
 }

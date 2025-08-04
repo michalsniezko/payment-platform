@@ -20,6 +20,7 @@ Home Page
 </div>
 <div>
     <a href="/invoices">Invoices</a>
+    <a href="/users/create">Create user</a>
 </div>
 </body>
 

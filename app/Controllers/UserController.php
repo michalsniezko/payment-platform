@@ -5,17 +5,11 @@ namespace App\Controllers;
 
 use App\Attributes\Get;
 use App\Attributes\Post;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
+use App\Models\Email;
+use Symfony\Component\Mime\Address;
 
 class UserController
 {
-    public function __construct(
-        private MailerInterface $mailer,
-    )
-    {
-    }
 
     #[Get('/users/create')]
     public function create(): View
@@ -23,9 +17,6 @@ class UserController
         return View::make('users/register');
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     */
     #[Post('/users')]
     public function register(): void
     {
@@ -46,13 +37,12 @@ Hello $first_name,
 Thank you for signing up!
 HTMLBody;
 
-        $email = new Email()
-            ->from('support@example.com')
-            ->to($email)
-            ->subject('Welcome!')
-            ->text($text)
-            ->html($htmlBody);
-
-        $this->mailer->send($email);
+        new Email()->queue(
+            new Address($email),
+            new Address('support@example.com', 'Support'),
+            'Welcome!',
+            $htmlBody,
+            $text
+        );
     }
 }
