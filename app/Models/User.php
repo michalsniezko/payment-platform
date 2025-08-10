@@ -4,17 +4,22 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Model;
+use Doctrine\DBAL\Exception;
 
 class User extends Model
 {
+    /**
+     * @throws Exception
+     */
     public function create(string $email, string $name, bool $isActive = true): int
     {
-        $stmt = $this->db->prepare(
-            'insert into users (email, full_name, is_active, created_at) values (?, ?, ?, NOW())'
-        );
+        $this->db->insert('users', [
+            'email'      => $email,
+            'full_name'  => $name,
+            'is_active'  => $isActive,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
 
-        $stmt->execute([$email, $name, $isActive]);
-
-        return (int)$this->db->lastInsertId();
+        return (int) $this->db->lastInsertId();
     }
 }

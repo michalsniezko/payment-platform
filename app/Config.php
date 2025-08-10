@@ -17,9 +17,9 @@ class Config
             'db' => [
                 'host' => $env['DB_HOST'],
                 'user' => $env['DB_USER'],
-                'pass' => $env['DB_PASSWORD'],
-                'database' => $env['DB_DATABASE'],
-                'driver' => $env['DB_DRIVER'] ?? 'mysql'
+                'password' => $env['DB_PASSWORD'],
+                'dbname' => $env['DB_DATABASE'],
+                'driver' => $env['DB_DRIVER'] ?? 'pdo_mysql'
             ],
             'mailer' => [
                 'dsn' => $env['MAILER_DSN'] ?? '',

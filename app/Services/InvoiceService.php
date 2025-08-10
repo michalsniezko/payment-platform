@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Contracts\PaymentGatewayInterface;
+use App\Models\Email;
+use Symfony\Component\Mime\Address;
 
 class InvoiceService
 {
@@ -26,8 +28,14 @@ class InvoiceService
             return false;
         }
 
-        // 3. send receipt
-        $this->emailService->send($customer, 'receipt');
+        // 3. send email
+        new Email()->queue(
+            new Address('test@example.com'),
+            new Address('support@example.com', 'Support'),
+            'Invoice processed!',
+            '',
+            sprintf('Invoice for %s has been processed for customer %s.', $amount, $customer['name'])
+        );
 
         return true;
     }

@@ -10,8 +10,10 @@ class Ticket extends Model
 {
     public function all(): Generator
     {
-        $stmt = $this->db->query('SELECT id, value, description FROM tickets');
+        $stmt = $this->db->executeQuery('SELECT id, value, description FROM tickets');
 
-        return $this->fetchLazy($stmt);
+        while ($row = $stmt->fetchAssociative()) {
+            yield $row;
+        }
     }
 }
