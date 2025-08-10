@@ -5,14 +5,14 @@ services:
       context: ./
       dockerfile: Dockerfile
     container_name: payment-platform-app
-    restart: always
+    restart: unless-stopped
     working_dir: /var/www
     volumes:
       - ../:/var/www
   nginx:
     image: nginx:1.19-alpine
     container_name: payment-platform-nginx
-    restart: always
+    restart: unless-stopped
     ports:
       - "8000:80"
     volumes:
@@ -23,7 +23,7 @@ services:
     image: mysql:8.0
     volumes:
       - ./storage/mysql:/var/lib/mysql
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
     ports:
@@ -31,7 +31,7 @@ services:
   mailhog:
     container_name: payment-platform-mailhog
     image: mailhog/mailhog
-    restart: always
+    restart: unless-stopped
     logging:
       driver: "none"
     ports:
@@ -40,6 +40,7 @@ services:
   cron:
     container_name: payment-platform-cron
     build: ./cron
+    restart: unless-stopped
     volumes:
       - ../:/var/www
       - ./log/cron:/var/log/cron

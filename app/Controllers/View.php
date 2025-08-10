@@ -34,7 +34,7 @@ class View
     {
         $viewPath = VIEW_PATH . '/' . $this->view . '.php';
         if (!file_exists($viewPath)) {
-            throw new ViewNotFoundException();
+            throw new ViewNotFoundException(message: sprintf("View \"%s\" not found.", $this->view));
         }
 
         extract($this->params);
