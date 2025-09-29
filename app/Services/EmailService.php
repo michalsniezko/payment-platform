@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Enum\EmailStatus;
-use App\Models\Email;
+use App\Models\Email as EmailModel;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email as SymfonyEmail;
 
 class EmailService
 {
-    public function __construct(protected Email $emailModel, protected MailerInterface $mailer)
+    public function __construct(protected EmailModel $emailModel, protected MailerInterface $mailer)
     {
     }
 
